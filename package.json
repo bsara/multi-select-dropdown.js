@@ -1,0 +1,67 @@
+{
+  "name": "multi-select-dropdown",
+  "version": "0.0.0",
+  "description": "",
+  "license": "CPOL-1.02",
+  "authors": [
+    "Brandon Sara (http://bsara.github.io/)"
+  ],
+  "homepage": "https://github.com/bsara/multi-select-dropdown.js#readme",
+  "bugs": {
+    "url": "https://github.com/bsara/multi-select-dropdown.js/issues"
+  },
+  "repository": "bsara/multi-select-dropdown.js",
+  "keywords": [
+    "multi",
+    "multiple",
+    "select",
+    "selectbox",
+    "selection",
+    "dropdown"
+  ],
+  "main": "dist/multi-select-dropdown.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "dist": "gulp dist",
+    "docs": "gulp docs",
+    "clean": "gulp clean",
+    "lint": "gulp lint",
+    "test": "gulp dist"
+  },
+  "files": [
+    "/dist/**/*.css",
+    "/dist/**/*.js",
+    "/dist/**/*.map",
+    "/dist/**/*.scss",
+    "/docs/**/*",
+    "/LICENSE",
+    "/README.md"
+  ],
+  "devDependencies": {
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-add-src": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-concat": "latest",
+    "gulp-header": "latest",
+    "gulp-jscs": "latest",
+    "gulp-jsdoc": "latest",
+    "gulp-jshint": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-rename": "latest",
+    "gulp-replace": "latest",
+    "gulp-ruby-sass": "latest",
+    "gulp-scss-lint": "latest",
+    "gulp-sourcemaps": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "latest",
+    "gulp-wrap-umd": "latest",
+    "jshint-stylish": "latest",
+    "merge-stream": "latest",
+    "path": "latest",
+    "run-sequence": "latest"
+  }
+}

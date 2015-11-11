@@ -1,0 +1,136 @@
+scss_files: 'src/**/*.scss'
+
+
+linters:
+  BangFormat:
+    space_before_bang: true
+    space_after_bang: false
+
+  BorderZero:
+    convention: none
+
+  ColorVariable:
+    enabled: false
+
+  DebugStatement:
+    severity: warning
+
+  DuplicateProperty:
+    enabled: true
+
+  ElsePlacement:
+    style: same_line
+
+  EmptyLineBetweenBlocks:
+    severity: warning
+    ignore_single_line_blocks: true
+
+  EmptyRule:
+    severity: warning
+
+  HexLength:
+    severity: warning
+    style: short
+
+  HexNotation:
+    severity: warning
+    style: lowercase
+
+  HexValidation:
+    enabled: true
+
+  IdSelector:
+    enabled: false
+
+  ImportantRule:
+    enabled: false
+
+  ImportPath:
+    severity: warning
+    leading_underscore: false
+    filename_extension: false
+
+  Indentation:
+    allow_non_nested_indentation: false
+    character: space
+    width: 2
+
+  LeadingZero:
+    severity: warning
+    style: include_zero
+
+  MergeableSelector:
+    severity: warning
+    force_nesting: true
+
+  NameFormat:
+    severity: warning
+
+  NestingDepth:
+    enabled: false
+
+  PropertySpelling:
+    enabled: true
+
+  PropertySortOrder:
+    enabled: false
+
+  QualifyingElement:
+    allow_element_with_attribute: true
+    allow_element_with_class: true
+    allow_element_with_id: false
+
+  SelectorDepth:
+    max_depth: 8
+
+  SelectorFormat:
+    severity: warning
+    attribute_convention: camel_case
+    class_convention: hyphenated_lowercase
+    id_convention: camel_case
+
+  Shorthand:
+    severity: warning
+
+  SingleLinePerProperty:
+    severity: warning
+    allow_single_line_rule_sets: false
+
+  SingleLinePerSelector:
+    enabled: false
+
+  SpaceAfterPropertyColon:
+    severity: warning
+    style: at_least_one_space
+
+  SpaceAfterPropertyName:
+    severity: warning
+
+  SpaceBeforeBrace:
+    severity: warning
+    allow_single_line_padding: true
+    style: space
+
+  SpaceBetweenParens:
+    severity: warning
+    spaces: 0
+
+  StringQuotes:
+    severity: warning
+    style: single_quotes
+
+  TrailingSemicolon:
+    enabled: true
+
+  UnnecessaryParentReference:
+    severity: warning
+
+  UrlQuotes:
+    severity: warning
+
+  VendorPrefix:
+    severity: warning
+    identifier_list: bourbon
+
+  ZeroUnit:
+    severity: warning

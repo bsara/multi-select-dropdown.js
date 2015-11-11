@@ -1,0 +1,29 @@
+{
+  "strict": false,
+
+  "browser": true,
+  "devel": true,
+  "esnext": false,
+  "predef": [
+    "document",
+    "window"
+  ],
+
+  "debug": false,
+  "eqeqeq": true,
+  "eqnull": true,
+  "funcscope": false,
+  "loopfunc": true,
+  "maxdepth": 3,
+  "nocomma": true,
+  "nonbsp": true,
+  "nonew": false,
+  "singleGroups": false,
+  "undef": true,
+  "unused": false, // TODO: Change back to true once inline ignore bugs are fixed!
+
+  "laxbreak": true,
+  "laxcomma": true,
+  "multistr": true,
+  "sub": true
+}

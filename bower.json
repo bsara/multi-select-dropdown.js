@@ -1,0 +1,38 @@
+{
+  "name": "multi-select-dropdown",
+  "version": "0.0.0",
+  "description": "",
+  "license": "CPOL-1.02",
+  "authors": [
+    "Brandon Sara (http://bsara.github.io/)"
+  ],
+  "homepage": "https://github.com/bsara/multi-select-dropdown.js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bsara/multi-select-dropdown.js.git"
+  },
+  "keywords": [
+    "multi",
+    "multiple",
+    "select",
+    "selectbox",
+    "selection",
+    "dropdown"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "main": "dist/multi-select-dropdown.js",
+  "ignore": [
+    "**/*",
+    "!/dist/**/*.css",
+    "!/dist/**/*.js",
+    "!/dist/**/*.map",
+    "!/dist/**/*.scss",
+    "!/docs/**/*",
+    "!/LICENSE",
+    "!/README.md"
+  ]
+}

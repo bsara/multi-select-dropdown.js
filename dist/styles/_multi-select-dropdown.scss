@@ -1,0 +1,118 @@
+/*!
+ * MultiSelectDropdown.js (0.0.0)
+ *
+ * Copyright (c) 2015 Brandon Sara (http://bsara.github.io)
+ * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
+ */
+$msd-string-empty: "";
+
+
+$msd-options-bg-color:     #fff !default;
+$msd-options-border-color: #aaa !default;
+$msd-options-check-color:  #666 !default;
+$msd-options-meta-color:   #555 !default;
+
+$msd-options-border-width: 1px !default;
+
+$msd-options-border:              solid $msd-options-border-width $msd-options-border-color !default;
+$msd-options-bg:                  $msd-options-bg-color !default;
+$msd-options-symbols-font-family: sans-serif !default;
+
+
+
+select.msd {
+  cursor: pointer;
+
+
+  option {
+    &[selected] {
+      background: $msd-options-bg;
+    }
+
+    .msd-select-all {
+      display: none;
+    }
+  }
+
+
+  &[multiple] {
+    z-index: 100;
+    height:  1em;
+    width:   auto;
+    display: inline-table;
+    border:  none;
+
+
+    option {
+      position:       relative;
+      display:        block;
+      padding-left:   0.25em;
+      background:     $msd-options-bg;
+      border-left:    $msd-options-border;
+      border-right:   $msd-options-border;
+      vertical-align: middle;
+
+      &.msd-placeholder {
+        cursor:        default;
+        border-top:    $msd-options-border;
+        border-bottom: $msd-options-border;
+
+        &::after {
+          $size: 1em;
+
+          content:       "\25BE";
+          position:      relative;
+          display:       inline-block;
+          width:         $size;
+          height:        $size;
+          top:           -0.115em;
+          padding-left:  0.31em;
+          padding-right: 0.01em;
+          font-size:     0.75em;
+          font-family:   $msd-options-symbols-font-family;
+          text-align:    center;
+        }
+      }
+
+      &.msd-select-all {
+        display: block;
+      }
+
+      &:last-child {
+        border-bottom: $msd-options-border;
+      }
+
+      &:not(.msd-placeholder) {
+        padding-top: 0.20em;
+
+        &::before {
+          $size: 1em;
+
+          content:        $msd-string-empty;
+          font-family:    $msd-options-symbols-font-family;
+          width:          $size;
+          height:         $size;
+          margin-left:    0.50em;
+          margin-right:   0.25em;
+          vertical-align: text-bottom;
+          appearance:     checkbox;
+        }
+
+        &.msd-select-all::before {
+          margin-left: initial;
+        }
+
+        &[checked] {
+          background: $msd-options-bg;
+
+          &::before {
+            content:     "\2714";
+            color:       $msd-options-check-color;
+            text-align:  center;
+            line-height: 1em;
+          }
+        }
+      }
+    }
+  }
+}
