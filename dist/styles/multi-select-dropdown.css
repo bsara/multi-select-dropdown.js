@@ -57,7 +57,7 @@ select.msd[multiple] option:not(.msd-placeholder) {
   padding-top: 0.20em;
 }
 select.msd[multiple] option:not(.msd-placeholder)::before {
-  content: "";
+  content: " ";
   font-family: sans-serif;
   width: 1em;
   height: 1em;
@@ -79,4 +79,8 @@ select.msd[multiple] option:not(.msd-placeholder)[checked]::before {
   color: #666;
   text-align: center;
   line-height: 1em;
+}
+select.msd[multiple] option:not(.msd-placeholder):hover {
+  color: #fff;
+  background: #08f;
 }

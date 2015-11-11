@@ -4,13 +4,15 @@
  * Copyright (c) 2015 Brandon Sara (http://bsara.github.io)
  * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
  */
-$msd-string-empty: "";
+$msd-string-space: " ";
 
 
-$msd-options-bg-color:     #fff !default;
-$msd-options-border-color: #aaa !default;
-$msd-options-check-color:  #666 !default;
-$msd-options-meta-color:   #555 !default;
+$msd-options-bg-color:         #fff !default;
+$msd-options-border-color:     #aaa !default;
+$msd-options-check-color:      #666 !default;
+$msd-options-hover-bg-color:   #08f !default;
+$msd-options-hover-text-color: #fff !default;
+$msd-options-meta-color:       #555 !default;
 
 $msd-options-border-width: 1px !default;
 
@@ -88,7 +90,7 @@ select.msd {
         &::before {
           $size: 1em;
 
-          content:        $msd-string-empty;
+          content:        $msd-string-space;
           font-family:    $msd-options-symbols-font-family;
           width:          $size;
           height:         $size;
@@ -111,6 +113,11 @@ select.msd {
             text-align:  center;
             line-height: 1em;
           }
+        }
+
+        &:hover {
+          color:      $msd-options-hover-text-color;
+          background: $msd-options-hover-bg-color;
         }
       }
     }
