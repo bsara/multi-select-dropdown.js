@@ -59,6 +59,9 @@ See [**Live Demo**][demo]
 #### Select Label Updates Automatically
 
 ![screenshot 3](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_3.png "Select Label Updates Automatically")
+
+---
+
 ![screenshot 2](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_2.png "Select Label Updates Automatically")
 
 ---
