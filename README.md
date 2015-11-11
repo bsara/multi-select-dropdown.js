@@ -48,29 +48,36 @@ See [**Live Demo**][demo]
 
 ![screenshot 0](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_0.png "Native Select Box Used")
 
+---
 
 #### Checkbox For Each Option &
 
-![screenshot](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_1.png "Select Label Updates Automatically")
+![screenshot 1](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_1.png "Select Label Updates Automatically")
 
+---
 
 #### Select Label Updates Automatically
 
-![screenshot 1](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_2.png "Select Label Updates Automatically")
 ![screenshot 3](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_3.png "Select Label Updates Automatically")
+![screenshot 2](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_2.png "Select Label Updates Automatically")
 
+---
 
-#### Built-in Select All Option _(Can be Turned Off if Not Needed)_
+#### Built-in Select All Option
+
+> **NOTE:** This feature can be turned off if not needed
 
 ![screenshot 4](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_4.png "Built-in Select All Option")
 
 
+---
+---
 
 
 # Documentation
 
-[**Live Demo**][demo]
-[**Changelog**](https://github.com/bsara/multi-select-dropdown.js/blob/master/CHANGELOG.md)
+- [**Live Demo**][demo]
+- [**Changelog**](https://github.com/bsara/multi-select-dropdown.js/blob/master/CHANGELOG.md)
 
 
 ---
@@ -96,7 +103,7 @@ define([ 'multi-select-dropdown' ], function(MultiSelectDropdown) {
 ```
 
 
-#### Include as CommonJS (Node) Module
+#### Include as CommonJS Module
 
 ```javascript
 var MultiSelectDropdown = require('multi-select-dropdown');
