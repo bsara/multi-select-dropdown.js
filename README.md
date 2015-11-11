@@ -73,8 +73,8 @@ See [**Live Demo**][demo]
 ![screenshot 4](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_4.png "Built-in Select All Option")
 
 
----
----
+<br/>
+<br/>
 
 
 # Documentation
