@@ -1,5 +1,4 @@
-MultiSelectDropdown.js
-================================================
+# MultiSelectDropdown.js
 
 [![CPOL v1.02 License](https://img.shields.io/badge/license-CPOL--1.02-blue.svg?style=flat-square)](https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
 
@@ -50,9 +49,9 @@ See [**Live Demo**][demo]
 
 ---
 
-#### Checkbox For Each Option &
+#### Checkbox For Each Option
 
-![screenshot 1](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_1.png "Select Label Updates Automatically")
+![screenshot 1](https://github.com/bsara/multi-select-dropdown.js/raw/master/screenshots/msd_1.png "Checkbox For Each Option")
 
 ---
 
