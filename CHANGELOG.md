@@ -1,3 +1,3 @@
-## [v0.0.0](https://github.com/bsara/multi-select-dropdown.js/tree/v0.0.0) (2015-11-11)
+## [v0.0.1](https://github.com/bsara/multi-select-dropdown.js/tree/v0.0.1) (2015-11-16)
 
-* Initial Release
+* Initial Alpha Release
