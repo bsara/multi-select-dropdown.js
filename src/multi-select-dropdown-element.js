@@ -1,15 +1,20 @@
-/* globals MSDInternalUtils */
+/* globals MSDInternalUtils, MSDObservableArray */
 /* exported MultiSelectDropdownElement */
+
+
+/**
+ * @typedef {Object} MultiSelectDropdownElementOptions
+ * @property {String}      [selector]            - TODO: Add description
+ * @property {HTMLElement} [element]             - TODO: Add description
+ * @property {Boolean}     [useSelectAll = true] - TODO: Add description
+ */
+
 
 
 /**
  * TODO: Add description
  *
- * @param {Object} options -
- *   - {String}      [selector]            - TODO: Add description
- *   - {HTMLElement} [element]             - TODO: Add description
- *   - {Boolean}     [useSelectAll = true] - TODO: Add description
- *
+ * @param {MultiSelectDropdownElementOptions} options *
  * @constructor
  */
 function MultiSelectDropdownElement(options) {
@@ -19,22 +24,22 @@ function MultiSelectDropdownElement(options) {
 
 
 
-  /** @private @type {!HTMLElement}   */ var _$select;
-  /** @private @type {!HTMLElement}   */ var _$selectAllOption;
-  /** @private @type {!HTMLElement}   */ var _$selectedPlaceholderOption;
+  /** @private @type {!HTMLElement} */ var _$select;
+  /** @private @type {!HTMLElement} */ var _$selectAllOption;
+  /** @private @type {!HTMLElement} */ var _$selectedPlaceholderOption;
 
-  /** @private @type {!String}        */ var _placeholderText;
-  /** @private @type {!String}        */ var _optionTypeLabelSingular;
-  /** @private @type {!String}        */ var _optionTypeLabelPlural;
+  /** @private @type {!String}      */ var _placeholderText;
+  /** @private @type {!String}      */ var _optionTypeLabelSingular;
+  /** @private @type {!String}      */ var _optionTypeLabelPlural;
 
-  /** @private @type {!HTMLElement[]} */ var _optionElements;
+  /** @private @type {!Boolean}     */ var _useSelectAll   = false;
+  /** @private @type {!Boolean}     */ var _wasAllSelected = false;
 
-  /** @private @type {!Boolean}       */ var _useSelectAll   = false;
-  /** @private @type {!Boolean}       */ var _wasAllSelected = false;
+  /** @private @type {!MSDObservableArray<!HTMLElement>} */ var _optionElements;
 
 
 
-  /** @constructor */
+  /** @constructs MultiSelectDropdownElement */
   ;(function _constructor() {
     options = (options || {});
 
@@ -44,7 +49,7 @@ function MultiSelectDropdownElement(options) {
     _optionTypeLabelPlural   = (_$select.dataset.optionTypeLabelPlural || (_optionTypeLabelSingular + "s"));
     _placeholderText         = (_$select.dataset.placeholder || ("0 " + _optionTypeLabelPlural + " Selected"));
 
-    _optionElements = _$select.querySelectorAll('option');
+    _optionElements = new MSDObservableArray(_$select.querySelectorAll('option'));
 
 
     if (options.useSelectAll === true) {
@@ -115,8 +120,66 @@ function MultiSelectDropdownElement(options) {
       _$selectedPlaceholderOption.selected = true;
       _$select.removeAttribute('multiple');
     });
+
+
+    _optionElements.attachEvent('update', _onUpdateOptionElements);
+
+
+
+    this.addOption    = addOption;
+    this.removeOption = removeOption;
+    this.clearOptions = clearOptions;
+    this.destroy      = destroy;
   }.bind(this))();
 
+
+
+  /**
+   * TODO: Implement
+   *
+   * @param {*} optionText
+   * @param {*} [optionValue]
+   */
+  function addOption(optionText, optionValue) {
+    var $newOption = document.createElement('option');
+
+    if (optionValue != null) {
+      $newOption.value = String(optionValue);
+    }
+
+    $newOption.text = String(optionText);
+
+    _optionElements.push($newOption);
+  }
+
+
+  /**
+   * TODO: Implement
+   *
+   * @param {*} optionValue
+   * @returns {Boolean} `true` if the option was removed successfully
+   *                    or if it was not found; otherwise, returns
+   *                    `false`.
+   */
+  function removeOption(optionValue) {
+    var selectionQuery  = _getOptionSelectionQuery(optionValue);
+    var $optionToRemove = _$select.querySelector(selectionQuery);
+
+    if ($optionToRemove != null) {
+      $optionToRemove.parentNode.removeChild($optionToRemove);
+      return (_$select.querySelector(selectionQuery) == null);
+    }
+
+    return true;
+  }
+
+
+  /**
+   * TODO: Implement
+   */
+  function clearOptions() {
+    _optionElements.splice(0, _optionElements.length);
+  }
 
 
   /**
@@ -126,6 +189,13 @@ function MultiSelectDropdownElement(options) {
    */
   function destroy() {
     // TODO: Implement
+  }
+
+
+
+  /** @private */
+  function _getOptionSelectionQuery(optionValue) {
+    return ((optionValue == null) ? 'option:not([value])' : ('option[value="' + String(optionValue) + '"]'));
   }
 
 
@@ -164,6 +234,17 @@ function MultiSelectDropdownElement(options) {
 
 
   // region Event Handlers
+
+  /** @private */
+  function _onUpdateOptionElements(optionElements) {
+    optionElements.forEach(function($option) {
+      var $parent = $option.parentNode;
+
+      $parent.removeChild($option);
+      $parent.appendChild($option);
+    });
+  }
+
 
   /** @private */
   function _onClickOption(e) {

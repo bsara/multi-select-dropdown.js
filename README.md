@@ -1,3 +1,4 @@
+
 # MultiSelectDropdown.js
 
 [![CPOL v1.02 License](https://img.shields.io/badge/license-CPOL--1.02-blue.svg?style=flat-square)](https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
