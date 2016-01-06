@@ -81,20 +81,22 @@ config.build.sassCache.dir = '.sass-cache';
 config.fileHeader = "/*!\n * MultiSelectDropdown.js (" + config.pkg.version + ")\n *\n * Copyright (c) " + (new Date()).getFullYear() + " Brandon Sara (http://bsara.github.io)\n * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)\n */\n";
 
 config.src.selector = {
-  scripts:         path.join(config.src.dir, '*.js'),
-  manager:         path.join(config.src.dir, 'multi-select-dropdown-manager.js'),
-  internalUtils:   path.join(config.src.dir, 'msd-internal-utils.js'),
-  observableArray: path.join(config.src.dir, 'msd-observable-array.js'),
+  scripts:       path.join(config.src.dir, '*.js'),
+  manager:       path.join(config.src.dir, 'multi-select-dropdown-manager.js'),
+  internalUtils: path.join(config.src.dir, 'msd-internal-utils.js'),
 
   styles:   path.join(config.src.dir, '**', '*.scss'),
   scssMain: path.join(config.src.dir, 'multi-select-dropdown.scss'),
 
   tests:   path.join(config.tests.dir, '**', '*.js')
 };
-config.src.selector.element = [
-  config.src.selector.observableArray,
-  path.join(config.src.dir, 'multi-select-dropdown-element.js')
+config.src.selector.observableArray = [
+  config.src.selector.internalUtils,
+  path.join(config.src.dir, 'msd-observable-array.js')
 ];
+config.src.selector.element = config.src.selector.observableArray.concat([
+  path.join(config.src.dir, 'multi-select-dropdown-element.js')
+]);
 config.src.selector.notScssMain = [
   config.src.selector.styles,
   ('!' + config.src.selector.scssMain)

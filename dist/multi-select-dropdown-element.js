@@ -13,7 +13,60 @@
   } else {
     root.MultiSelectDropdownElement = factory();
   }
-}(this, function() {/**
+}(this, function() {/** @private */
+var MSDInternalUtils = {
+  /**
+   * @param  {HTMLElement} $el
+   * @return {String}
+   * @private
+   */
+  getElementSelector: function getElementSelector($el) {
+    if ($el == null || !($el instanceof HTMLElement)) {
+      throw new TypeError("$el cannot be `null` or `undefined` and must be an instance of `HTMLElement`!");
+    }
+
+    var ret = $el.tagName;
+
+    if ($el.id != null) {
+      ret += ('#' + $el.id);
+    }
+    if ($el.className != null) {
+      ret += ('.' + $el.className);
+    }
+
+    return ret;
+  },
+
+
+  /**
+   * Implentation taken from http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+   *
+   * @param  {String} str
+   * @return {Number}
+   * @private
+   */
+  getHashCode: function(str) {
+    var chr;
+    var hash = 0;
+
+    str = String(str);
+
+    if (str.length === 0) {
+      return hash;
+    }
+
+    for (var i = 0; i < str.length; i++) {
+      chr   = str.charCodeAt(i);
+      hash  = (((hash << 5) - hash) + chr);
+      hash |= 0; // Convert to 32bit integer
+    }
+
+    return hash;
+  }
+};
+
+
+Object.freeze(MSDInternalUtils);/**
  * TODO: Add description
  *
  * @inherits {Array}
@@ -321,6 +374,8 @@ function MultiSelectDropdownElement(options) {
   /** @private @type {!Boolean}     */ var _useSelectAll   = false;
   /** @private @type {!Boolean}     */ var _wasAllSelected = false;
 
+  /** @private @type {!Object}      */ var _optionElementsOnClickHandlers;
+
   /** @private @type {!MSDObservableArray<!HTMLElement>} */ var _optionElements;
 
 
@@ -340,6 +395,11 @@ function MultiSelectDropdownElement(options) {
     _optionTypeLabelSingular = (_$select.dataset.optionTypeLabelSingular || _$select.dataset.optionTypeLabel || "Option");
     _optionTypeLabelPlural   = (_$select.dataset.optionTypeLabelPlural || (_optionTypeLabelSingular + "s"));
     _placeholderText         = (_$select.dataset.placeholder || ("0 " + _optionTypeLabelPlural + " Selected"));
+
+    _optionElementsOnClickHandlers = {
+      optionElements: [],
+      eventHandlers:  []
+    };
 
     _optionElements = new MSDObservableArray(_$select.querySelectorAll('option'));
 
@@ -440,8 +500,9 @@ function MultiSelectDropdownElement(options) {
     $newOption.text = String(optionText);
 
     _$select.appendChild($newOption);
-
     _optionElements.push($newOption);
+
+    _setupOption($newOption);
   }
 
 
@@ -458,7 +519,10 @@ function MultiSelectDropdownElement(options) {
     var $optionToRemove = _$select.querySelector(selectionQuery);
 
     if ($optionToRemove != null) {
+      _cleanupOptionForRemoval($optionToRemove);
+
       $optionToRemove.parentNode.removeChild($optionToRemove);
+
       return (_$select.querySelector(selectionQuery) == null);
     }
 
@@ -471,6 +535,7 @@ function MultiSelectDropdownElement(options) {
    */
   function clearOptions() {
     _optionElements.splice(0, _optionElements.length);
+    _optionElements.forEach(_cleanupOptionForRemoval);
   }
 
 
@@ -489,7 +554,19 @@ function MultiSelectDropdownElement(options) {
 
   /** @private */
   function _setupOption($option) {
-    $option.addEventListener('click', _onClickOption.bind($option));
+    var eventHandler = _onClickOption.bind($option);
+
+    $option.addEventListener('click', eventHandler);
+
+    _optionElementsOnClickHandlers.optionElements.push($option);
+    _optionElementsOnClickHandlers.eventHandlers.push(eventHandler);
+  }
+
+
+  /** @private */
+  function _cleanupOptionForRemoval($option) {
+    var eventHandler = _optionElementsOnClickHandlers.eventHandlers[_optionElementsOnClickHandlers.optionElements.indexOf($option)];
+    $option.removeEventListener('click', eventHandler);
   }
 
 
