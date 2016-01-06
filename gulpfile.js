@@ -78,7 +78,7 @@ var config = {
 
 config.build.sassCache.dir = '.sass-cache';
 
-config.fileHeader = "/*!\n * MultiSelectDropdown.js (" + config.pkg.version + ")\n *\n * Copyright (c) " + (new Date()).getFullYear() + " Brandon Sara (http://bsara.github.io)\n * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)\n */\n";
+config.fileHeader = "/*!\n * multi-select-dropdown.js (" + config.pkg.version + ")\n *\n * Copyright (c) " + (new Date()).getFullYear() + " Brandon Sara (http://bsara.github.io)\n * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)\n */\n";
 
 config.src.selector = {
   scripts:       path.join(config.src.dir, '*.js'),

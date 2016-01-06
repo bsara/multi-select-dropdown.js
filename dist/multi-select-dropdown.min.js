@@ -1,5 +1,5 @@
 /*!
- * MultiSelectDropdown.js (0.0.1)
+ * multi-select-dropdown.js (0.0.1)
  *
  * Copyright (c) 2016 Brandon Sara (http://bsara.github.io)
  * Licensed under the CPOL-1.02 (https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
