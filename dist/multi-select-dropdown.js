@@ -523,6 +523,10 @@ function MultiSelectDropdownElement(options) {
 
       $optionToRemove.parentNode.removeChild($optionToRemove);
 
+      if ($optionToRemove.getAttribute('checked') != null) {
+        _updateSelectedPlaceholderOptionInnerText();
+      }
+
       return (_$select.querySelector(selectionQuery) == null);
     }
 
