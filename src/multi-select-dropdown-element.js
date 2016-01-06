@@ -170,13 +170,12 @@ function MultiSelectDropdownElement(options) {
   /**
    * TODO: Implement
    *
-   * @param {*} optionValue
-   * @returns {Boolean} `true` if the option was removed successfully
-   *                    or if it was not found; otherwise, returns
-   *                    `false`.
+   * @param {String|Number|Date|HTMLElement} optionValue
+   * @returns {Boolean} `true` if the option was removed successfully or
+   *                    if it was not found; otherwise, returns `false`.
    */
   function removeOption(optionValue) {
-    var selectionQuery  = _getOptionSelectionQuery(optionValue);
+    var selectionQuery  = _getOptionSelectionQuery((optionValue instanceof HTMLElement) ? optionValue.value : optionValue);
     var $optionToRemove = _$select.querySelector(selectionQuery);
 
     if ($optionToRemove != null) {
@@ -184,11 +183,17 @@ function MultiSelectDropdownElement(options) {
 
       $optionToRemove.parentNode.removeChild($optionToRemove);
 
-      if ($optionToRemove.getAttribute('checked') != null) {
-        _updateSelectedPlaceholderOptionInnerText();
+      var wasSuccessful = (_$select.querySelector(selectionQuery) == null);
+
+      if (wasSuccessful) {
+        _optionElements.splice(_optionElements.indexOf($optionToRemove), 1);
+
+        if ($optionToRemove.getAttribute('checked') != null) {
+          _updateSelectedPlaceholderOptionInnerText();
+        }
       }
 
-      return (_$select.querySelector(selectionQuery) == null);
+      return wasSuccessful;
     }
 
     return true;
@@ -199,8 +204,7 @@ function MultiSelectDropdownElement(options) {
    * TODO: Implement
    */
   function clearOptions() {
-    _optionElements.splice(0, _optionElements.length);
-    _optionElements.forEach(_cleanupOptionForRemoval);
+    _optionElements.slice(0, _optionElements.length).forEach(this.removeOption);
   }
 
 
