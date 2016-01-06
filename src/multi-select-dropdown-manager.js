@@ -23,12 +23,8 @@ function MultiSelectDropdownManager() {
     _elements = {};
 
 
-    // region Public Functions
-
     this.init   = init;
     this.reload = reload;
-
-    // endregion
   }.bind(this))();
 
 
@@ -70,6 +66,9 @@ function MultiSelectDropdownManager() {
   }
 
 
+
+  // region Private Functions
+
   /**
    * @param {HTMLElement} $select
    * @returns {HTMLElement}
@@ -87,4 +86,6 @@ function MultiSelectDropdownManager() {
 
     return msdElement;
   }
+
+  // endregion
 }

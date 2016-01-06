@@ -14,7 +14,7 @@
 /**
  * TODO: Add description
  *
- * @param {MultiSelectDropdownElementOptions} options *
+ * @param {String|HTMLElement|MultiSelectDropdownElementOptions} options *
  * @constructor
  */
 function MultiSelectDropdownElement(options) {
@@ -43,7 +43,13 @@ function MultiSelectDropdownElement(options) {
   ;(function _constructor() {
     options = (options || {});
 
-    _$select = (options.element || document.querySelector(options.selector));
+    if (typeof options === 'string') {
+      _$select = document.querySelector(options);
+    } else if (options instanceof HTMLElement) {
+      _$select = options;
+    } else {
+      _$select = (options.element || document.querySelector(options.selector));
+    }
 
     _optionTypeLabelSingular = (_$select.dataset.optionTypeLabelSingular || _$select.dataset.optionTypeLabel || "Option");
     _optionTypeLabelPlural   = (_$select.dataset.optionTypeLabelPlural || (_optionTypeLabelSingular + "s"));
@@ -59,7 +65,7 @@ function MultiSelectDropdownElement(options) {
 
       _$selectAllOption.innerText = "All";
       _$selectAllOption.classList.add('msd-select-all');
-      _$selectAllOption.addEventListener('click', _onClickOption.bind(_$selectAllOption));
+      _$selectAllOption.addEventListener('click', _onClickSelectAllOption.bind(_$selectAllOption));
 
       _updateSelectAllOption();
 
@@ -79,9 +85,7 @@ function MultiSelectDropdownElement(options) {
 
     for (var i = 0; i < _optionElements.length; i++) {
       var $option = _optionElements[i];
-
-      $option.addEventListener('click', _onClickOption.bind($option));
-      _$selectAllOption.addEventListener('click', _onClickSelectAllOption.bind($option));
+      _setupOption($option);
     }
 
 
@@ -122,7 +126,7 @@ function MultiSelectDropdownElement(options) {
     });
 
 
-    _optionElements.attachEvent('update', _onUpdateOptionElements);
+    _optionElements.addEventListener('update', _onUpdateOptionElements);
 
 
 
@@ -143,11 +147,13 @@ function MultiSelectDropdownElement(options) {
   function addOption(optionText, optionValue) {
     var $newOption = document.createElement('option');
 
-    if (optionValue != null) {
+    if (optionValue != null && optionValue !== "") {
       $newOption.value = String(optionValue);
     }
 
     $newOption.text = String(optionText);
+
+    _$select.appendChild($newOption);
 
     _optionElements.push($newOption);
   }
@@ -191,6 +197,14 @@ function MultiSelectDropdownElement(options) {
     // TODO: Implement
   }
 
+
+
+  // region Private Functions
+
+  /** @private */
+  function _setupOption($option) {
+    $option.addEventListener('click', _onClickOption.bind($option));
+  }
 
 
   /** @private */
@@ -278,6 +292,8 @@ function MultiSelectDropdownElement(options) {
     }
     this.setAttribute('checked', 'checked');
   }
+
+  // endregion
 
   // endregion
 }

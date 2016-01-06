@@ -20,10 +20,10 @@
  * @constructor
  */
 function MSDObservableArray() {
-  var ctorArgs = arguments;
+  var items = arguments;
 
   if (!(this instanceof MSDObservableArray)) {
-    return new MSDObservableArray.apply(this, ctorArgs);
+    return new MSDObservableArray.apply(this, items);
   }
 
 
@@ -34,14 +34,24 @@ function MSDObservableArray() {
 
   /** @constructs MSDObservableArray */
   ;(function() {
-    Array.apply(this, ctorArgs);
+    Array.call(this);
+
+
+    if (items != null) {
+      if (items.length === 1) {
+        var arrayLikeItem = Array.from(items[0]);
+        this.push.apply(this, (arrayLikeItem.length > 0) ? arrayLikeItem : items[0]);
+      } else {
+        this.push.apply(this, Array.from(items));
+      }
+    }
 
 
     _events = {};
 
 
-    this.attachEvent = attachEvent;
-    this.detachEvent = detachEvent;
+    this.addEventListener    = addEventListener;
+    this.removeEventListener = removeEventListener;
 
     this.push    = push;
     this.pop     = pop;
@@ -62,31 +72,33 @@ function MSDObservableArray() {
    * @param {!Function} eventHandler          - The function to be called when the event represented by `eventName` occurs.
    * @param {Object}    [eventHandlerContext] - The context to be used when calling `eventHandler` (defaults to this object).
    */
-  function attachEvent(eventName, eventHandler, eventHandlerContext) {
+  function addEventListener(eventName, eventHandler, eventHandlerContext) {
     eventHandlerContext = (eventHandlerContext || this);
 
 
-    var handlers = _events[eventName];
+    var handlerInfos = _events[eventName];
 
-    if (handlers == null) {
-      handlers = _events[eventName] = {};
+    if (handlerInfos == null) {
+      handlerInfos = _events[eventName] = {};
     }
 
 
-    var contexts = handlers[eventHandler];
+    var handlerHashCode = MSDInternalUtils.getHashCode(eventHandler);
+    var handlerInfo     = handlerInfos[handlerHashCode];
 
-    if (contexts == null) {
-      contexts = handlers[eventHandler] = [];
+    if (handlerInfo == null) {
+      handlerInfo = handlerInfos[handlerHashCode] = {
+        handler:  eventHandler,
+        contexts: []
+      };
     }
 
 
-    var contextIndex = contexts.indexOf(eventHandlerContext);
-
-    if (~contextIndex) {
+    if (~handlerInfo.contexts.indexOf(eventHandlerContext)) {
       return;
     }
 
-    contexts.push(eventHandlerContext);
+    handlerInfo.contexts.push(eventHandlerContext);
   }
 
 
@@ -97,36 +109,37 @@ function MSDObservableArray() {
    * @param {!Function} [eventHandler]        - The handler function attached to the event represented by the given 'eventName'.
    * @param {Object}    [eventHandlerContext] - The context used when calling `eventHandler` (defaults to this object).
    */
-  function detachEvent(eventName, eventHandler, eventHandlerContext) {
+  function removeEventListener(eventName, eventHandler, eventHandlerContext) {
     if (!(eventName in _events)) {
       return;
     }
 
 
-    var handlers = _events[eventName];
+    var handlerInfos = _events[eventName];
     if (eventHandler == null) {
       delete _events[eventName];
       return;
     }
 
 
-    var contexts = handlers[eventHandler];
+    var handlerHashCode = MSDInternalUtils.getHashCode(eventHandler);
+    var handlerInfo     = handlerInfos[eventHandler];
     if (eventHandlerContext == null) {
-      delete handlers[eventHandler];
+      delete handlerInfos[handlerHashCode];
       return;
     }
 
 
-    var contextIndex = contexts.indexOf(eventHandlerContext);
+    var contextIndex = handlerInfo.contexts.indexOf(eventHandlerContext);
     if (~contextIndex) {
-      contexts.splice(contextIndex, 1);
+      handlerInfo.contexts.splice(contextIndex, 1);
     }
 
 
-    if (contexts.length === 0) {
-      delete handlers[eventHandler];
+    if (handlerInfo.contexts.length === 0) {
+      delete handlerInfos[handlerHashCode];
     }
-    if (Object.keys(handlers).length === 0) {
+    if (Object.keys(handlerInfos).length === 0) {
       delete _events[eventName];
     }
   }
@@ -140,8 +153,8 @@ function MSDObservableArray() {
   function push() {
     var ret = Array.prototype.push.apply(this, arguments);
 
-    _triggerEvent('add', _getEventArgs(arguments));
-    _triggerEvent('update', _getEventArgs(arguments));
+    _triggerEvent('add', _getEventArgs.call(this, arguments));
+    _triggerEvent('update', _getEventArgs.call(this, arguments));
 
     return ret;
   }
@@ -155,8 +168,8 @@ function MSDObservableArray() {
   function pop() {
     var ret = Array.prototype.pop.apply(this, arguments);
 
-    _triggerEvent('remove', _getEventArgs(ret));
-    _triggerEvent('update', _getEventArgs(ret));
+    _triggerEvent('remove', _getEventArgs.call(this, ret));
+    _triggerEvent('update', _getEventArgs.call(this, ret));
 
     return ret;
   }
@@ -170,8 +183,8 @@ function MSDObservableArray() {
   function reverse() {
     var ret = Array.prototype.reverse.apply(this, arguments);
 
-    _triggerEvent('sort', _getEventArgs());
-    _triggerEvent('update', _getEventArgs());
+    _triggerEvent('sort', _getEventArgs.call(this));
+    _triggerEvent('update', _getEventArgs.call(this));
 
     return ret;
   }
@@ -187,8 +200,8 @@ function MSDObservableArray() {
 
     var ret = Array.prototype.shift.apply(this, arguments);
 
-    _triggerEvent('remove', _getEventArgs(removed));
-    _triggerEvent('update', _getEventArgs(removed));
+    _triggerEvent('remove', _getEventArgs.call(this, removed));
+    _triggerEvent('update', _getEventArgs.call(this, removed));
 
     return ret;
   }
@@ -202,8 +215,8 @@ function MSDObservableArray() {
   function sort() {
     var ret = Array.prototype.sort.apply(this, arguments);
 
-    _triggerEvent('sort', _getEventArgs(ret));
-    _triggerEvent('update', _getEventArgs(ret));
+    _triggerEvent('sort', _getEventArgs.call(this, ret));
+    _triggerEvent('update', _getEventArgs.call(this, ret));
 
     return ret;
   }
@@ -217,8 +230,8 @@ function MSDObservableArray() {
   function splice() {
     var ret = Array.prototype.splice.apply(this, arguments);
 
-    _triggerEvent('remove', _getEventArgs(ret));
-    _triggerEvent('update', _getEventArgs(ret));
+    _triggerEvent('remove', _getEventArgs.call(this, ret));
+    _triggerEvent('update', _getEventArgs.call(this, ret));
 
     return ret;
   }
@@ -232,8 +245,8 @@ function MSDObservableArray() {
   function unshift() {
     var ret = Array.prototype.unshift.apply(this, arguments);
 
-    _triggerEvent('remove', _getEventArgs(arguments));
-    _triggerEvent('update', _getEventArgs(arguments));
+    _triggerEvent('remove', _getEventArgs.call(this, arguments));
+    _triggerEvent('update', _getEventArgs.call(this, arguments));
 
     return ret;
   }
@@ -256,14 +269,14 @@ function MSDObservableArray() {
         return;
       }
 
+      var handlerInfos     = _events[eventName];
+      var handlerHashCodes = Object.keys(handlerInfos);
 
-      var handlers = _events[eventName];
+      for (var i = 0; i < handlerHashCodes.length; i++) {
+        var handlerInfo = handlerInfos[handlerHashCodes[i]];
 
-      for (var handler in Object.keys(handlers)) {
-        var contexts = handlers[handler];
-
-        for (var i = 0; i < contexts.length; i++) {
-          handler.apply(contexts[i], args);
+        for (var j = 0; j < handlerInfo.contexts.length; j++) {
+          handlerInfo.handler.apply(handlerInfo.contexts[j], args);
         }
       }
     }, 0);
@@ -287,7 +300,7 @@ MSDObservableArray.prototype.constructor = MSDObservableArray;/**
 /**
  * TODO: Add description
  *
- * @param {MultiSelectDropdownElementOptions} options *
+ * @param {String|HTMLElement|MultiSelectDropdownElementOptions} options *
  * @constructor
  */
 function MultiSelectDropdownElement(options) {
@@ -316,7 +329,13 @@ function MultiSelectDropdownElement(options) {
   ;(function _constructor() {
     options = (options || {});
 
-    _$select = (options.element || document.querySelector(options.selector));
+    if (typeof options === 'string') {
+      _$select = document.querySelector(options);
+    } else if (options instanceof HTMLElement) {
+      _$select = options;
+    } else {
+      _$select = (options.element || document.querySelector(options.selector));
+    }
 
     _optionTypeLabelSingular = (_$select.dataset.optionTypeLabelSingular || _$select.dataset.optionTypeLabel || "Option");
     _optionTypeLabelPlural   = (_$select.dataset.optionTypeLabelPlural || (_optionTypeLabelSingular + "s"));
@@ -332,7 +351,7 @@ function MultiSelectDropdownElement(options) {
 
       _$selectAllOption.innerText = "All";
       _$selectAllOption.classList.add('msd-select-all');
-      _$selectAllOption.addEventListener('click', _onClickOption.bind(_$selectAllOption));
+      _$selectAllOption.addEventListener('click', _onClickSelectAllOption.bind(_$selectAllOption));
 
       _updateSelectAllOption();
 
@@ -352,9 +371,7 @@ function MultiSelectDropdownElement(options) {
 
     for (var i = 0; i < _optionElements.length; i++) {
       var $option = _optionElements[i];
-
-      $option.addEventListener('click', _onClickOption.bind($option));
-      _$selectAllOption.addEventListener('click', _onClickSelectAllOption.bind($option));
+      _setupOption($option);
     }
 
 
@@ -395,7 +412,7 @@ function MultiSelectDropdownElement(options) {
     });
 
 
-    _optionElements.attachEvent('update', _onUpdateOptionElements);
+    _optionElements.addEventListener('update', _onUpdateOptionElements);
 
 
 
@@ -416,11 +433,13 @@ function MultiSelectDropdownElement(options) {
   function addOption(optionText, optionValue) {
     var $newOption = document.createElement('option');
 
-    if (optionValue != null) {
+    if (optionValue != null && optionValue !== "") {
       $newOption.value = String(optionValue);
     }
 
     $newOption.text = String(optionText);
+
+    _$select.appendChild($newOption);
 
     _optionElements.push($newOption);
   }
@@ -464,6 +483,14 @@ function MultiSelectDropdownElement(options) {
     // TODO: Implement
   }
 
+
+
+  // region Private Functions
+
+  /** @private */
+  function _setupOption($option) {
+    $option.addEventListener('click', _onClickOption.bind($option));
+  }
 
 
   /** @private */
@@ -551,6 +578,8 @@ function MultiSelectDropdownElement(options) {
     }
     this.setAttribute('checked', 'checked');
   }
+
+  // endregion
 
   // endregion
 }
