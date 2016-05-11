@@ -1,12 +1,9 @@
-
 # MultiSelectDropdown.js
 
 [![CPOL v1.02 License](https://img.shields.io/badge/license-CPOL--1.02-blue.svg?style=flat-square)](https://github.com/bsara/multi-select-dropdown.js/blob/master/LICENSE.md)
 
 [![NPM Package](https://img.shields.io/npm/v/multi-select-dropdown.svg?style=flat-square)](https://www.npmjs.com/package/multi-select-dropdown)&nbsp;
 [![Bower Package](https://img.shields.io/bower/v/multi-select-dropdown.svg?style=flat-square)](http://bower.io/search/?q=multi-select-dropdown)
-
-[![Gitter Chat](https://badges.gitter.im/JOIN%20CHAT.svg)](https://gitter.im/bsara/multi-select-dropdown.js)
 
 
 Support for a multiple selection dropdown using fully native JavaScript, CSS, and HTML (no extra libraries needed).
@@ -21,17 +18,17 @@ See [**Live Demo**][demo]
 - **NPM:** `$ npm install --save multi-select-dropdown`
 - **Bower:** `$ bower install --save multi-select-dropdown`
 - **CDN - Full (minified):**
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/multi-select-dropdown.min.js"></script>`
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/styles/multi-select-dropdown.min.css"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/multi-select-dropdown.min.js"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/styles/multi-select-dropdown.min.css"></script>`
 - **CDN - Full (not minified):**
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0"></script>`
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/styles/multi-select-dropdown.css"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/styles/multi-select-dropdown.css"></script>`
 - **CDN - Element Only (minified):**
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/multi-select-dropdown-element.min.js"></script>`
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/styles/multi-select-dropdown.min.css"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/multi-select-dropdown-element.min.js"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/styles/multi-select-dropdown.min.css"></script>`
 - **CDN - Element Only (not minified):**
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/multi-select-dropdown-element.js"></script>`
-  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.0/dist/styles/multi-select-dropdown.css"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/multi-select-dropdown-element.js"></script>`
+  - `<script src="//npmcdn.com/multi-select-dropdown@0.0.2/dist/styles/multi-select-dropdown.css"></script>`
 - [**Download**](https://github.com/bsara/multi-select-dropdown.js/releases)
 
 

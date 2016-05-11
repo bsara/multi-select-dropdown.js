@@ -1,28 +1,29 @@
+/* jshint esnext: true */
 /* globals require */
 
 
-var gulp                  = require('gulp');
-var addSrc                = require('gulp-add-src');
-var autoprefixer          = require('gulp-autoprefixer');
-var concat                = require('gulp-concat');
-var del                   = require('del');
-var header                = require('gulp-header');
-var jscs                  = require('gulp-jscs');
-// var jsdoc                 = require('gulp-jsdoc');
-var jshint                = require('gulp-jshint');
-var jshintStylishReporter = require('jshint-stylish');
-var merge                 = require('merge-stream');
-var minifyCss             = require('gulp-minify-css');
-var path                  = require('path');
-var rename                = require('gulp-rename');
-var replace               = require('gulp-replace');
-var runSequence           = require('run-sequence');
-var sass                  = require('gulp-ruby-sass');
-var scssLint              = require('gulp-scss-lint');
-var sourcemaps            = require('gulp-sourcemaps');
-var uglify                = require('gulp-uglify');
-var util                  = require('gulp-util');
-var wrapUMD               = require('gulp-wrap-umd');
+const gulp                  = require('gulp');
+const addSrc                = require('gulp-add-src');
+const autoprefixer          = require('gulp-autoprefixer');
+const concat                = require('gulp-concat');
+const del                   = require('del');
+const header                = require('gulp-header');
+const jscs                  = require('gulp-jscs');
+// const jsdoc                 = require('gulp-jsdoc');
+const jshint                = require('gulp-jshint');
+const jshintStylishReporter = require('jshint-stylish');
+const merge                 = require('merge-stream');
+const minifyCss             = require('gulp-minify-css');
+const path                  = require('path');
+const rename                = require('gulp-rename');
+const replace               = require('gulp-replace');
+const runSequence           = require('run-sequence');
+const sass                  = require('gulp-ruby-sass');
+const scssLint              = require('gulp-scss-lint');
+const sourcemaps            = require('gulp-sourcemaps');
+const uglify                = require('gulp-uglify');
+const util                  = require('gulp-util');
+const wrapUMD               = require('gulp-wrap-umd');
 
 
 
@@ -58,7 +59,7 @@ var config = {
     sassCache: {},
   },
   dist: {
-    dir: 'dist/',
+    dir:    'dist/',
     styles: { dir: 'dist/styles/' }
   },
   docs: { dir: 'docs/' },
@@ -240,10 +241,10 @@ gulp.task('dist', [ 'clean:build', 'clean:dist' ], function(callback) {
 
     var styles = gulp.src(path.join(config.build.dir, '*.css'))
                      .pipe(gulp.dest(config.dist.styles.dir))
-                     .pipe(sourcemaps.init())
+                     // .pipe(sourcemaps.init())
                      .pipe(minifyCss())
                      .pipe(rename({ suffix: '.min' }))
-                     .pipe(sourcemaps.write('.', { sourceRoot: null }))
+                     // .pipe(sourcemaps.write('.', { sourceRoot: null }))
                      .pipe(addSrc(path.join(config.build.dir, '*.scss')))
                      .pipe(gulp.dest(config.dist.styles.dir));
 
